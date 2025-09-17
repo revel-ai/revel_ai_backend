@@ -10,14 +10,14 @@ A backend engine for orchestrating AI-driven patient care journeys using TypeScr
 - **Patient Context**: Personalized journeys based on patient data
 - **Monitoring**: Real-time monitoring of journey run status
 - **Database Persistence**: PostgreSQL for reliable data storage
-- **Comprehensive Testing**: Unit, integration, and end-to-end tests
+- **Production Ready**: Robust error handling and validation
 
 ## Tech Stack
 
 - **Language**: TypeScript
 - **Framework**: Express.js
 - **Database**: PostgreSQL (Neon)
-- **Testing**: Jest + Supertest
+- **Documentation**: Swagger/OpenAPI
 - **Async Processing**: Native setTimeout (extensible to BullMQ/Redis)
 
 ## Quick Start
@@ -218,27 +218,6 @@ interface PatientContext {
 }
 ```
 
-## Testing
-
-Run the test suite:
-
-```bash
-# Unit tests
-npm test
-
-# Watch mode
-npm run test:watch
-
-# Coverage report
-npm run test:coverage
-```
-
-### Test Structure
-
-- **Unit Tests**: Test individual components (JourneyExecutor, JourneyController)
-- **Integration Tests**: Test complete API workflows
-- **End-to-End Tests**: Test full journey execution scenarios
-
 ## Example Usage
 
 ### 1. Create a Journey
@@ -246,7 +225,29 @@ npm run test:coverage
 ```bash
 curl -X POST http://localhost:3000/api/journeys \
   -H "Content-Type: application/json" \
-  -d @examples/sample-journeys.json
+  -d '{
+    "name": "Hip Replacement Recovery Journey",
+    "start_node_id": "welcome",
+    "nodes": [
+      {
+        "id": "welcome",
+        "type": "MESSAGE",
+        "message": "Welcome to your recovery journey!",
+        "next_node_id": "age_check"
+      },
+      {
+        "id": "age_check",
+        "type": "CONDITIONAL",
+        "condition": {
+          "field": "age",
+          "operator": "gte",
+          "value": 65
+        },
+        "on_true_next_node_id": "senior_care",
+        "on_false_next_node_id": "standard_care"
+      }
+    ]
+  }'
 ```
 
 ### 2. Trigger a Journey
@@ -258,7 +259,7 @@ curl -X POST http://localhost:3000/api/journeys/{journeyId}/trigger \
     "id": "patient-123",
     "age": 72,
     "language": "en",
-    "condition": "liver_replacement"
+    "condition": "hip_replacement"
   }'
 ```
 
@@ -297,13 +298,13 @@ Journey runs are persisted in the database with the following states:
 
 ```
 src/
-├── __tests__/           # Test files
 ├── controllers/         # HTTP request handlers
 ├── database/           # Database connection and schema
 ├── repositories/       # Data access layer
 ├── routes/            # API route definitions
 ├── services/          # Business logic
 ├── types/             # TypeScript interfaces
+├── config/            # Configuration files (Swagger)
 └── app.ts             # Application entry point
 ```
 
@@ -312,7 +313,6 @@ src/
 1. Extend the `JourneyNode` type in `src/types/journey.ts`
 2. Add validation logic in `JourneyController`
 3. Implement execution logic in `JourneyExecutor.executeNode()`
-4. Add tests for the new node type
 
 ### Environment Variables
 
