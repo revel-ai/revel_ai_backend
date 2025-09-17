@@ -1,0 +1,36 @@
+{
+  "patients": [
+    {
+      "id": "patient-001",
+      "age": 72,
+      "language": "en",
+      "condition": "liver_replacement",
+      "name": "John Smith",
+      "notes": "Senior patient with hip replacement - should trigger senior care program"
+    },
+    {
+      "id": "patient-002",
+      "age": 45,
+      "language": "es",
+      "condition": "knee_replacement",
+      "name": "Maria Rodriguez",
+      "notes": "Spanish-speaking patient with knee replacement - should receive Spanish resources"
+    },
+    {
+      "id": "patient-003",
+      "age": 58,
+      "language": "en",
+      "condition": "liver_replacement",
+      "name": "Sarah Johnson",
+      "notes": "Standard age patient with hip replacement - should follow standard program"
+    },
+    {
+      "id": "patient-004",
+      "age": 68,
+      "language": "es",
+      "condition": "liver_replacement",
+      "name": "Carlos Mendez",
+      "notes": "Senior Spanish-speaking patient - should trigger both senior care and Spanish resources"
+    }
+  ]
+}

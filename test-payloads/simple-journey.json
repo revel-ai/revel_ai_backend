@@ -1,0 +1,24 @@
+{
+  "name": "Simple Test Journey",
+  "start_node_id": "welcome",
+  "nodes": [
+    {
+      "id": "welcome",
+      "type": "MESSAGE",
+      "message": "Welcome to your test journey!",
+      "next_node_id": "wait"
+    },
+    {
+      "id": "wait",
+      "type": "DELAY",
+      "duration_seconds": 3,
+      "next_node_id": "followup"
+    },
+    {
+      "id": "followup",
+      "type": "MESSAGE",
+      "message": "How are you feeling after the wait?",
+      "next_node_id": null
+    }
+  ]
+}
